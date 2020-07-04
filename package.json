@@ -1,0 +1,14 @@
+{
+  "name": "subscription-api",
+  "version": "1.0.0",
+  "description": "Subscription API",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^26.1.0"
+  }
+}

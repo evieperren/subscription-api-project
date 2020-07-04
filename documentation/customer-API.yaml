@@ -1,0 +1,312 @@
+openapi: 3.0.1
+info:
+  version: 0.0.1
+  title: ChihuahuaBox customers API
+  
+servers:
+  - url: http://localhost:3040/api/
+
+tags:
+  - name: Customers
+    description: Customers Service
+
+paths:
+  /customers:
+    get:
+      tags:
+        - Customers
+      summary: Get all customers
+      description: Retrieves all customers
+      operationId: getCustomers
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/responses/200'
+        404:
+          description: "Customers not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/404'
+        500:
+          description: "Unexpected Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/500'
+          
+    post:
+      tags:
+      - Customers
+      summary: "Create a customer"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/customer"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/responses/201'
+        400:
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/400'
+        500:
+          description: "Unexpected Error"
+          
+    delete:
+      tags:
+        - Customers
+      summary: Delete one customer
+      description: Deletes an customer
+      parameters:
+        - name: id
+          in: query
+          description: Filter customer by customer ID
+          schema:
+            type: string
+      responses:
+        200:
+          description: "customerID has been successfully deleted"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/deleted'
+        400:
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/400'
+        404:
+          description: "Unable to find customer"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/404'
+        500:
+          description: "Unexpected Error"
+
+  /customers/{customerId}: 
+    put:
+      tags:
+        - Customers
+      summary: Update a customer
+      description: Update a customer; this includes partial and full updates.
+      operationId: updateCustomer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: Filter customer by customer ID
+          schema:
+            type: string
+      requestBody:
+        description: Update customer body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/customer'
+      responses:
+        200:
+          description: Customer succesfully updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/201"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/400"
+        404:
+          description: Unable to find customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/responses/404"
+  
+components:
+  schemas:
+    customer:  
+      type: "object"
+      properties:
+        name:
+          type: "object"
+          properties:
+            first: 
+              type: "string"
+              example: "evie"
+            last: 
+              type: "string"
+              example: "perren"
+        contactDetails:
+          type: "object"
+          properties: 
+            telephone: 
+              type: "number"
+              example: "07712345678"
+            email: 
+              type: "string"
+              example: "evie@email.com"
+            postcode: 
+              type: "string"
+              example: "SP10 1DE"
+        bankDetails: 
+          type: "object"
+          properties:
+            nameOnAccount: 
+              type: "string"
+              example: "Evie Perren"
+            accountNumber: 
+              type: "number"
+              example: 12345678
+            sortCode: 
+              type: "number"
+              example: 123456
+        startDate: 
+          type: "string"
+          example: "01/01/2020"
+        subscription: 
+          type: "object"
+          properties:
+            name: 
+              type: "string"
+              example: "treat box 1"
+            level: 
+              type: "string"
+              enum: ["standard", "premium", "deluxe"]
+              example: "premium"
+            id: 
+              type: "number"
+              example: 12343
+            activeStatus: 
+              type: "string"
+              enum: ["active", "cancelled"]
+              example: "active"
+      required:
+        - id
+        - name
+        - contactDetails
+        - startDate
+        - bankDetails
+        - subscription
+              
+    successfulCustomer: 
+      type: "object"
+      properties:
+        id: 
+          type: 'string'
+          example: 'edjf78998yb'
+        name:
+          type: "object"
+          properties:
+            first: 
+              type: "string"
+              example: "evie"
+            last: 
+              type: "string"
+              example: "perren"
+        contactDetails:
+          type: "object"
+          properties: 
+            telephone: 
+              type: "number"
+              example: "07712345678"
+            email: 
+              type: "string"
+              example: "evie@email.com"
+            postcode: 
+              type: "string"
+              example: "SP10 1DE"
+        bankDetails: 
+          type: "object"
+          properties:
+            nameOnAccount: 
+              type: "string"
+              example: "Evie Perren"
+            accountNumber: 
+              type: "number"
+              example: 12345678
+            sortCode: 
+              type: "number"
+              example: 123456
+        startDate: 
+          type: "string"
+          example: "01/01/2020"
+        subscription: 
+          type: "object"
+          properties:
+            name: 
+              type: "string"
+              example: "treat box 1"
+            level: 
+              type: "string"
+              enum: ["standard", "premium", "deluxe"]
+              example: "premium"
+            id: 
+              type: "number"
+              example: 12343
+            activeStatus: 
+              type: "string"
+              enum: ["active", "cancelled"]
+              example: "active"
+              
+      required:
+        - id
+        - name
+        - contactDetails
+        - bankDetails
+        - subscription
+        
+  standardResponse:
+      type: "object"
+      properties:
+        message:
+          example: "Error message ..."
+  deleted: 
+      type: "object"
+      properties:
+        message:
+          example: "*customerID* has been successfully deleted"
+  notFound: 
+      type: "object"
+      properties:
+        error:
+          example: "Unable to be found. Please check ID"
+        
+  responses: 
+    200: 
+      $ref: "#/components/schemas/customer"
+    201:
+      $ref: "#/components/schemas/successfulCustomer"
+    400: 
+      $ref: "#/components/standardResponse"
+    404: 
+      $ref: "#/components/notFound"
+    500:  
+      $ref: "#/components/standardResponse"
+      
+parameters:
+    customerId:
+      name: customerID
+      in: path
+      description: Customer ID
+      required: true
+      schema:
+        type: string
+    

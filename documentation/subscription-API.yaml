@@ -1,0 +1,155 @@
+openapi: 3.0.1
+info:
+  version: 0.0.1
+  title: ChihuahuaBox subscription API
+  
+servers:
+  - url: http://localhost:3040/api/
+
+tags:
+  - name: Subscription
+    description: Subscription Service
+
+paths:
+  /subscription:
+    get:
+      tags:
+        - Subscription
+      summary: Get all Subscription
+      description: Retrieves all Subscription
+      operationId: getSubscriptions
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/responses/200'
+        404:
+          description: "Subscription not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/404'
+        500:
+          description: "Unexpected Error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/500'
+          
+    post:
+      tags:
+      - Subscription
+      summary: "Create a Subscription"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/subscription"
+      responses:
+        201:
+          description: "Created"
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/responses/201'
+        400:
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/400'
+        500:
+          description: "Unexpected Error"
+  
+components:
+  schemas:
+    subscription:  
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "Small dog trears"
+        cost: 
+          type: "object"
+          properties:
+            standard: 
+              type: "number"
+              example: 5.00
+            premium: 
+              type: "number"
+              example: 10.00
+            deluxe: 
+              type: "number"
+              example: 15.00
+        startDate: 
+          type: "string"
+          example: "01/01/2020"
+        activeStatus: 
+          type: "string"
+          enum: ["active", "cancelled"]
+          example: "active"
+    
+    successfulSubscription:
+      type: "object"
+      properties:
+        id: 
+          type: "string"
+          example: "98msdewr2"
+        name:
+          type: "string"
+          example: "Small dog trears"
+        cost: 
+          type: "object"
+          properties:
+            standard: 
+              type: "number"
+              example: 5.00
+            premium: 
+              type: "number"
+              example: 10.00
+            deluxe: 
+              type: "number"
+              example: 15.00
+        startDate: 
+          type: "string"
+          example: "01/01/2020"
+        activeStatus: 
+          type: "string"
+          enum: ["active", "cancelled"]
+          example: "active"
+          
+      required:
+        - id
+        - name
+        - cost
+        - startDate
+        - activeStatus
+        
+  standardResponse:
+      type: "object"
+      properties:
+        message:
+          example: "Error message ..."
+  notFound: 
+      type: "object"
+      properties:
+        error:
+          example: "Unable to be found. Please check ID"
+        
+  responses: 
+    200: 
+      $ref: "#/components/schemas/subscription"
+    201:
+      $ref: "#/components/schemas/successfulSubscription"
+    400: 
+      $ref: "#/components/standardResponse"
+    404: 
+      $ref: "#/components/notFound"
+    500:  
+      $ref: "#/components/standardResponse"
+    

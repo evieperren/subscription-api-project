@@ -4,11 +4,17 @@
   "description": "Subscription API",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "nodemon src/server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jest": "^26.1.0"
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jest": "^26.1.0",
+    "mongoose": "^5.9.21",
+    "nodemon": "^2.0.4"
   }
 }

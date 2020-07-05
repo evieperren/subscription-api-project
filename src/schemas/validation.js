@@ -1,27 +1,33 @@
 const validators = {
-    validateString: ((value) => {
-        return /([A-Z])\w+/.test(value)
+    string: ((value) => {
+        return /([A-Za-z]{2,30})\w+/.test(value)
     }),
-    validateActiveStatus: ((value) => {
+    activeStatus: ((value) => {
         return /(active)|(cancelled)\w+/.test(value)
     }),
-    validateSubscriptionLevel: ((value) => {
+    subscriptionLevel: ((value) => {
         return /(standard)|(premium)|(deluxe)\w+/.test(value)
     }),
-    validateTelephone: ((value) => {
+    telephone: ((value) => {
         return /([0-9]{9,11})\w+/.test(value)
     }),
-    validateAccountNumber: ((value) => {
+    accountNumber: ((value) => {
         return /([0-9]{8})\w+/.test(value)
     }),
-    validateSortCode: ((value) => {
+    sortCode: ((value) => {
         return /([0-9]{6})\w+/.test(value)
     }),
-    validateDate: ((value) => {
+    date: ((value) => {
         return /([0-9]{2})\/([0-9]{2})\/([0-9]{4})/.test(value)
     }),
-    validateNumber: ((value) => {
+    number: ((value) => {
         return /([0-9])\w+/.test(value)
+    }),
+    cost: ((value) => {
+        return /([0-9]{1,}).([0-9]{2})/.test(value)
+    }),
+    postcode: ((value) => {
+        return /((^([a-zA-Z]){1,2})([0-9]{1,2})([a-zA-Z]{1})? ([0-9]{1})(([a-zA-Z]){2}))/.test(value)
     })
 }
 

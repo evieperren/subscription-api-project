@@ -7,13 +7,13 @@ const CustomerSchema = new mongoose.Schema({
             type: String,
             required: true,
             trim: true,
-            validate: validators.validateString 
+            validate: validators.string 
         },
         last: {
             type: String,
             required: true,
             trim: true,
-            validate: validators.validateString
+            validate: validators.string
         }
     },
     contactDetails: {
@@ -21,7 +21,7 @@ const CustomerSchema = new mongoose.Schema({
             type: String,
             required: true,
             trim: true,
-            validate: validators.validateTelephone
+            validate: validators.telephone
         }, 
         email: {
             type: String,
@@ -31,7 +31,8 @@ const CustomerSchema = new mongoose.Schema({
         postcode: {
             type: String,
             required: true,
-            trim: true
+            trim: true,
+            validate: validators.postcode
         }
     },
     bankDetails: {
@@ -39,41 +40,41 @@ const CustomerSchema = new mongoose.Schema({
             type: String,
             required: true,
             trim: true,
-            validate: validators.validateString
+            validate: validators.string
         }, 
         accountNumber: {
             type: Number,
             required: true,
             trim: true,
-            validate: validators.validateAccountNumber
+            validate: validators.accountNumber
 
         },
         sortCode: {
             type: Number,
             required: true,
             trim: true,
-            validate: validators.validateSortCode
+            validate: validators.sortCode
         }
     },
     startDate: {
         type: String,
         required: true,
         trim: true,
-        validate: validators.validateDate
+        validate: validators.date
     },
     subscription: {
         name: {
             type: String,
             required: true,
             trim: true,
-            validate: validators.validateString
+            validate: validators.string
         },
         level: {
             type: String,
             required: true,
             enum: ['standard', 'premium', 'deluxe'],
             trim: true,
-            validator: validators.validateSubscriptionLevel
+            validator: validators.subscriptionLevel
         },
         id: {
             type: String,
@@ -85,7 +86,7 @@ const CustomerSchema = new mongoose.Schema({
             required: true,
             enum: ['active', 'cancelled'],
             trim: true,
-            validator: validators.validateActiveStatus
+            validator: validators.activeStatus
         }
     }
 })

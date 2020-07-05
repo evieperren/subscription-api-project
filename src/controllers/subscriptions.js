@@ -19,12 +19,9 @@ SubscriptionController.get('/', async (req, res) => {
                 "message": "No subscriptions found in the database"
             })
         } else {
-            res.send(returnedSubscriptions)
+            res.status(200).send(returnedSubscriptions)
         }
     } catch (error){
-        res.status(400).json({
-            "message": "Bad request. Please try again"
-        })
         res.status(500).json({
             "message": `Internal server error. ${error}`
         })
@@ -35,7 +32,7 @@ SubscriptionController.post('/', async(req, res) => {
     try {
         const subscription = new Subscription(req.body)
         subscription.save()
-        res.send(subscription)
+        res.status(201).send(subscription)
 
     } catch (error) {
         res.status(400).json({

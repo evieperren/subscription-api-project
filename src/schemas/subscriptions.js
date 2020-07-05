@@ -1,14 +1,41 @@
 const mongoose = require('mongoose')
+const validators = require('./validation')
 
 const SubscriptionSchema = new mongoose.Schema({
-    name: String,
-    cost: {
-        standard: Number,
-        premium: Number,
-        deluxe: Number
+    name: {
+        type: String,
+        validate: validators.validateString,
+        required: true
     },
-    startDate: String,
-    activeStatus: String
+    cost: {
+        standard: {
+            type: Number,
+            validate: validators.validateNumber,
+            required: true
+
+        },
+        premium: {
+            type: Number,
+            validate: validators.validateNumber,
+            required: true
+
+        },
+        deluxe: {
+            type: Number,
+            validate: validators.validateNumber,
+            required: true
+        }
+    },
+    startDate: {
+        type: String,
+        validate: validators.validateDate,
+        required: true
+    },
+    activeStatus: {
+        type: String,
+        validate: validators.validateActiveStatus,
+        required: true
+    }
 })
 
 module.exports = SubscriptionSchema

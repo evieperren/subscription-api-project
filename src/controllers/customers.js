@@ -9,18 +9,26 @@ CustomerController.use('/', (req, res, next) => {
     next()
 })
 
-CustomerController.get('/', async (req, res, next) => {
+CustomerController.get('/', async (req, res) => {
     try {
         if(req.query.customerId){
             const returnedCustomer = await Customer.findById(req.query.customerId)
-            res.send(returnedCustomer)
+            res.status(200).send(returnedCustomer)
             
         } else {
             const returnedCustomers = await Customer.find()
-            res.send(returnedCustomers)
+            res.status(200).send(returnedCustomers)
+
+            if( returnedCustomers.length === 0){
+                res.status(404).json({
+                    "message": "No customers found. Please create a customer"
+                })
+            }
         }
     } catch (error) {
-        console.log(error)
+        res.status(500).json({
+            "message": `Internal server error. ${error}`
+        })
     }
 })
 
@@ -28,15 +36,20 @@ CustomerController.post('/', async (req, res) => {
     try {
         const customer = new Customer(req.body)
         customer.save()    
-        res.send(customer)
+        res.status(201).send(customer)
     } catch (error) {
-        console.log(error)
+        res.status(400).json({
+            "message": `Bad request. ${error}`
+        })
+        res.status(500).json({
+            "message": `Internal server error. ${error}`
+        })
     }
 })
 
-CustomerController.put('/', async (req, res, next) => {
+CustomerController.put('/:customerId', async (req, res) => {
     try {
-        const returnedCustomer = await Customer.findById(req.query.customerId)
+        const returnedCustomer = await Customer.findById(req.params.customerId)
         returnedCustomer.name.first = req.body.name.first || returnedCustomer.name.first
         returnedCustomer.name.last = req.body.name.last || returnedCustomer.name.last
         returnedCustomer.contactDetails.telephone = req.body.contactDetails.telephone || returnedCustomer.contactDetails.telephone
@@ -51,20 +64,40 @@ CustomerController.put('/', async (req, res, next) => {
         returnedCustomer.subscription.id = req.body.subscription.id || returnedCustomer.subscription.id
         returnedCustomer.subscription.activeStatus = req.body.subscription.activeStatus || returnedCustomer.subscription.activeStatus
 
-        res.send(returnedCustomer)
+
+        returnedCustomer.save()
+        res.status(200).send(returnedCustomer)
+        
     } catch(error) {
-        res.send(error)
+        res.status(400).json({
+            "message": `Bad request. ${error}`
+        })
+        res.status(404).json({
+            "message": `No customer found with matching ID. ${error}`
+        })
     }
 })
 
 CustomerController.delete('/:customerId', async (req, res) => {
     try {
         const returnedCustomer = await Customer.findByIdAndDelete(req.params.customerId)
-        res.status(200).json({
-            "message": `${returnedCustomer._id} has been successfully deleted`
-        })
+
+        if(!returnedCustomer){
+            res.status(404).json({
+                "message": `No customer found with matching ID.`
+            })
+        } else {
+            res.status(200).json({
+                "message": `${returnedCustomer._id} has been successfully deleted`
+            })
+        }
     } catch (error) {
-        console.log(error)
+        res.status(400).json({
+            "message": `Bad request. ${error}`
+        })
+        res.status(500).json({
+            "message": `Internal server error. ${error}`
+        })
     }
 })
 module.exports = CustomerController

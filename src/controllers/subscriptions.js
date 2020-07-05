@@ -6,20 +6,44 @@ const Router = require('express').Router
 const SubscriptionController = new Router()
 const Subscription = mongoose.model('subscriptions', SubscriptionSchema)
 
-SubscriptionController.get('/', async(req, res, next) => {
-    console.log('reached subscription controller')
+SubscriptionController.use('/', (req, res, next) => {
+    console.log('reached subscription controllers')
     next()
+})
+SubscriptionController.get('/', async (req, res) => {
+    try {
+        const returnedSubscriptions = await Subscription.find()
+        
+        if(returnedSubscriptions.length === 0){
+            res.status(404).json({
+                "message": "No subscriptions found in the database"
+            })
+        } else {
+            res.send(returnedSubscriptions)
+        }
+    } catch (error){
+        res.status(400).json({
+            "message": "Bad request. Please try again"
+        })
+        res.status(500).json({
+            "message": `Internal server error. ${error}`
+        })
+    }
 })
 
 SubscriptionController.post('/', async(req, res) => {
     try {
-        const subscription = new Subscription({
-            name: 'Small dogs'
-        })
+        const subscription = new Subscription(req.body)
         subscription.save()
         res.send(subscription)
+
     } catch (error) {
-        console.log(error)
+        res.status(400).json({
+            "message": "Bad request. Please try again"
+        })
+        res.status(500).json({
+            "message": `Internal server error. ${error}`
+        })
     }
 })
 module.exports = SubscriptionController

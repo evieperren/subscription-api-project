@@ -7,5 +7,6 @@ router.use('/', (req, res, next) => {
     next()
 })
 router.use('/customers', require('./controllers/customers'))
+router.use('/subscriptions', require('./controllers/subscriptions'))
 
 module.exports = router

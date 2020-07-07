@@ -66,14 +66,16 @@ paths:
         500:
           description: "Unexpected Error"
           
+
+  /customers/{customerId}: 
     delete:
       tags:
         - Customers
       summary: Delete one customer
       description: Deletes an customer
       parameters:
-        - name: id
-          in: query
+        - name: customerId
+          in: path
           description: Filter customer by customer ID
           schema:
             type: string
@@ -98,8 +100,6 @@ paths:
                 $ref: '#/components/responses/404'
         500:
           description: "Unexpected Error"
-
-  /customers/{customerId}: 
     put:
       tags:
         - Customers

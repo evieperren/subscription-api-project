@@ -3,7 +3,9 @@ const CustomerSchema = require('../schemas/customers')
 const Customer = mongoose.model('customers', CustomerSchema)
 const { validationResult } = require('express-validator')
 const winston = require('winston')
-
+const axios = require('axios')
+const authorisation = require('../utils/authorisation')
+const { subscribe } = require('..')
 async function getAllCustomers (req, res) {
     try {
         if(req.query.customerId){
@@ -29,8 +31,53 @@ async function getAllCustomers (req, res) {
     }
 }
 async function createCustomer (req, res) {
-    const customer = new Customer(req.body)
     try {
+        let subscriptionName = ''
+        let subscriptionId = ''
+        let subscriptionCost = ''
+        let subscriptionActiveStatus = ''
+        let customer = {}
+        await axios.get('http://localhost:5000/api/subscriptions?name=small_dog_treats&activeStatus=active', {
+            auth: {
+                username: 'admin',
+                password: 'adminPassword'
+            }
+        })
+        .then((response) => {
+            response.data.forEach(subscription => {
+                subscriptionName = subscription.name
+                subscriptionId = subscription._id
+                subscriptionCost = subscription.cost
+                subscriptionActiveStatus = subscription.activeStatus
+            })
+            customer = new Customer({
+                name: {
+                    first: req.body.name.first,
+                    last: req.body.name.last,
+                },
+                contactDetails:{
+                    telephone: req.body.contactDetails.telephone,
+                    email: req.body.contactDetails.email,
+                    postcode: req.body.contactDetails.postcode
+                },
+                bankDetails: {
+                    nameOnAccount: req.body.bankDetails.nameOnAccount,
+                    accountNumber: req.body.bankDetails.accountNumber,
+                    sortCode: req.body.bankDetails.sortCode
+                },
+                startDate: req.body.startDate,
+                subscription: {
+                    name: subscriptionName,
+                    id: subscriptionId,
+                    cost: subscriptionCost,
+                    activeStatus: subscriptionActiveStatus,
+                    level: req.body.subscription.level
+                }
+
+            })
+        })
+        .catch((error) => console.log(error))
+
         const validationErrors = await validationResult(customer)
 
         if(!validationErrors.isEmpty()){

@@ -7,8 +7,12 @@ const Subscription = mongoose.model('subscriptions', SubscriptionSchema)
 async function getAllSubscriptions (req, res) {
     try {
         const returnedSubscriptions = await Subscription.find()
-        
-        if(returnedSubscriptions.length === 0){
+
+        if(req.query.name && req.query.activeStatus){
+            const subscriptions = await Subscription.find({name: req.query.name,activeStatus: req.query.activeStatus})
+            res.send(subscriptions)
+
+        } else if (returnedSubscriptions.length === 0) {
             res.status(404).json({
                 "message": "No subscriptions found in the database"
             })

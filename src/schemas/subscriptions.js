@@ -32,7 +32,7 @@ const SubscriptionSchema = new mongoose.Schema({
     },
     activeStatus: {
         type: String,
-        validate: validators.activeStatus,
+        enum: ['active', 'cancelled'],
         required: true
     }
 })

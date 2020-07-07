@@ -12,7 +12,6 @@ SubscriptionController.use('/', (req, res, next) => {
 SubscriptionController.get('/', roles.admin,async (req, res) => {
     getAllSubscriptions(req, res)
 })
-
 SubscriptionController.post('/', roles.admin, expressValidation.postSubscription, async (req, res) => {
     createSubscriptions(req, res)
 })

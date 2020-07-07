@@ -2,9 +2,6 @@ const validators = {
     string: ((value) => {
         return /([A-Za-z]{2,30})\w+/.test(value)
     }),
-    activeStatus: ((value) => {
-        return /(active)|(cancelled)\w+/.test(value)
-    }),
     subscriptionLevel: ((value) => {
         return /(standard)|(premium)|(deluxe)\w+/.test(value)
     }),

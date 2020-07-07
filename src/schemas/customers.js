@@ -86,7 +86,6 @@ const CustomerSchema = new mongoose.Schema({
             required: true,
             enum: ['active', 'cancelled'],
             trim: true,
-            validator: validators.activeStatus
         }
     }
 })

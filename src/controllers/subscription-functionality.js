@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const SubscriptionSchema = require('../schemas/subscriptions')
+const { validationResult } = require('express-validator')
 const Subscription = mongoose.model('subscriptions', SubscriptionSchema)
 
 async function getAllSubscriptions (req, res) {
@@ -21,10 +22,18 @@ async function getAllSubscriptions (req, res) {
 }
 
 async function createSubscriptions (req, res) {
+    const subscription = new Subscription(req.body)
+
     try {
-        const subscription = new Subscription(req.body)
-        subscription.save()
-        res.status(201).send(subscription)
+        const validationErrors = await validationResult(subscription)
+        if(!validationErrors.isEmpty()){
+            res.status(400).json({
+                errors: validationErrors.array()
+            })
+        } else {
+            await subscription.save()
+            res.status(201).send(subscription)
+        }
 
     } catch (error) {
         res.status(400).json({

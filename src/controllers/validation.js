@@ -32,11 +32,11 @@ const expressValidation = {
         check('bankDetails.accountNumber')
             .isNumeric().withMessage('Please enter a valid account number')
             .isLength({min: 8, max: 8}).withMessage('Please enter 8 values')
-            .matches(/([0-9]{8})\w+/).withMessage('Please enter a valid account number'),
+            .matches(/^[0-9]{8}$/).withMessage('Please enter a valid account number'),
         check('bankDetails.sortCode')
             .isNumeric().withMessage('Please enter a valid sort code')
             .isLength({min: 6, max: 6}).withMessage('Please enter 6 values')
-            .matches(/([0-9]{6})\w+/).withMessage('Please enter a valid account number'),
+            .matches(/^[0-9]{6}$/).withMessage('Please enter a valid account number'),
         check('startDate')
             .isString().withMessage('Please enter a valid date')
             .matches(/([0-9]{2})\/([0-9]{2})\/([0-9]{4})/).withMessage('Please enter a valid date in DD/MM/YYYY format'),
@@ -94,12 +94,12 @@ const expressValidation = {
         check('bankDetails.accountNumber')
             .isNumeric().withMessage('Please enter a valid account number')
             .isLength({min: 8, max: 8}).withMessage('Please enter 8 values')
-            .matches(/([0-9]{8})\w+/).withMessage('Please enter a valid account number')
+            .matches(/^[0-9]{8}$/).withMessage('Please enter a valid account number')
             .optional({ checkFalsy:true }),
         check('bankDetails.sortCode')
             .isNumeric().withMessage('Please enter a valid sort code')
             .isLength({min: 6, max: 6}).withMessage('Please enter 6 values')
-            .matches(/([0-9]{6})\w+/).withMessage('Please enter a valid account number')
+            .matches(/^[0-9]{6}$/).withMessage('Please enter a valid account number')
             .optional({ checkFalsy:true }),
         check('startDate')
             .isString().withMessage('Please enter a valid date')

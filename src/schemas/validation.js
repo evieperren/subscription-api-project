@@ -12,10 +12,10 @@ const validators = {
         return /([0-9]{9,11})\w+/.test(value)
     }),
     accountNumber: ((value) => {
-        return /([0-9]{8})\w+/.test(value)
+        return /^[0-9]{8}$/.test(value)
     }),
     sortCode: ((value) => {
-        return /([0-9]{6})\w+/.test(value)
+        return /^[0-9]{6}$/.test(value)
     }),
     date: ((value) => {
         return /([0-9]{2})\/([0-9]{2})\/([0-9]{4})/.test(value)

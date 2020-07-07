@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const CustomerSchema = require('../schemas/customers')
 const Customer = mongoose.model('customers', CustomerSchema)
+const { validationResult } = require('express-validator')
 
 async function getAllCustomers (req, res) {
     try {
@@ -25,10 +26,19 @@ async function getAllCustomers (req, res) {
     }
 }
 async function createCustomer (req, res) {
+    const customer = new Customer(req.body)
     try {
-        const customer = new Customer(req.body)
-        customer.save()    
-        res.status(201).send(customer)
+        const validationErrors = await validationResult(customer)
+
+        if(!validationErrors.isEmpty()){
+            return res.status(400).json({
+                errors: validationErrors.array()
+            })
+        } else {
+            await customer.save()    
+            res.status(201).send(customer)
+        }
+
     } catch (error) {
         res.status(400).json({
             "message": `Bad request. ${error}`
@@ -56,9 +66,16 @@ async function updateCustomer (req, res) {
         returnedCustomer.subscription.id = req.body.subscription.id || returnedCustomer.subscription.id
         returnedCustomer.subscription.activeStatus = req.body.subscription.activeStatus || returnedCustomer.subscription.activeStatus
 
+        const validationErrors = await validationResult(returnedCustomer)
 
-        returnedCustomer.save()
-        res.status(200).send(returnedCustomer)
+        if(!validationErrors.isEmpty()){
+            return res.status(400).json({
+                errors: validationErrors.array()
+            })
+        } else {
+            await returnedCustomer.save()
+            res.status(200).send(returnedCustomer)
+        }
         
     } catch(error) {
         res.status(400).json({

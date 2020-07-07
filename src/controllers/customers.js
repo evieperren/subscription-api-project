@@ -2,26 +2,26 @@ const Router = require('express').Router
 const CustomerController = new Router()
 const { getAllCustomers, createCustomer, updateCustomer, deleteCustomer } = require('./customer-functionality')
 const expressValidation = require('./validation')
-const winston = require('winston')
+const roles = require('../utils/authentication')
 
 CustomerController.use('/', (req, res, next) => {
     console.log('reached controllers')
     next()
 })
 
-CustomerController.get('/', async (req, res) => {
+CustomerController.get('/', roles.admin, async (req, res) => {
     getAllCustomers(req, res)
 })
 
-CustomerController.post('/', expressValidation.post, async (req, res) => {
+CustomerController.post('/', roles.all, expressValidation.post, async (req, res) => {
     createCustomer(req, res)
 })
 
-CustomerController.put('/:customerId', expressValidation.post, async (req, res) => {
+CustomerController.put('/:customerId', roles.all, expressValidation.post, async (req, res) => {
    updateCustomer(req, res) 
 })
 
-CustomerController.delete('/:customerId', async (req, res) => {
+CustomerController.delete('/:customerId', roles.all,async (req, res) => {
     deleteCustomer(req, res)
 })
 

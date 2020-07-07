@@ -14,18 +14,18 @@ async function getAllCustomers (req, res) {
             const returnedCustomers = await Customer.find()
             res.status(200).send(returnedCustomers)
 
-            if( returnedCustomers.length === 0){
-                winston.log({level: 'error', message: 'No customers found. Please create a customer'})
+            if(returnedCustomers.length === 0){
                 res.status(404).json({
                     "message": "No customers found. Please create a customer"
                 })
+                winston.log({level: 'error', message: 'No customers found. Please create a customer'})
             }
         }
     } catch (error) {
-        winston.log({level: "error", message: error})
         res.status(500).json({
             "message": `Internal server error. ${error}`
         })
+        winston.log({level: "error", message: error})
     }
 }
 async function createCustomer (req, res) {

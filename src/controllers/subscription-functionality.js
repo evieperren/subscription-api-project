@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const SubscriptionSchema = require('../schemas/subscriptions')
 const { validationResult } = require('express-validator')
+const winston = require('winston')
 const Subscription = mongoose.model('subscriptions', SubscriptionSchema)
 
 async function getAllSubscriptions (req, res) {
@@ -11,10 +12,12 @@ async function getAllSubscriptions (req, res) {
             res.status(404).json({
                 "message": "No subscriptions found in the database"
             })
+            winston.log({level: 'error', message: 'No subscriptions found in the database'})
         } else {
             res.status(200).send(returnedSubscriptions)
         }
     } catch (error){
+        winston.log({level: 'error', message: `Internal server error. ${error}`})
         res.status(500).json({
             "message": `Internal server error. ${error}`
         })
@@ -30,18 +33,17 @@ async function createSubscriptions (req, res) {
             res.status(400).json({
                 errors: validationErrors.array()
             })
+            winston.log({level: 'error', message: validationErrors.array()})
         } else {
             await subscription.save()
             res.status(201).send(subscription)
         }
 
     } catch (error) {
-        res.status(400).json({
-            "message": "Bad request. Please try again"
-        })
         res.status(500).json({
             "message": `Internal server error. ${error}`
         })
+        winston.log({level: "error", message: error})
     }
 }
 

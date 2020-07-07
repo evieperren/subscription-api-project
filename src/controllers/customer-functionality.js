@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const CustomerSchema = require('../schemas/customers')
 const Customer = mongoose.model('customers', CustomerSchema)
 const { validationResult } = require('express-validator')
+const winston = require('winston')
 
 async function getAllCustomers (req, res) {
     try {
@@ -14,12 +15,14 @@ async function getAllCustomers (req, res) {
             res.status(200).send(returnedCustomers)
 
             if( returnedCustomers.length === 0){
+                winston.log({level: 'error', message: 'No customers found. Please create a customer'})
                 res.status(404).json({
                     "message": "No customers found. Please create a customer"
                 })
             }
         }
     } catch (error) {
+        winston.log({level: "error", message: error})
         res.status(500).json({
             "message": `Internal server error. ${error}`
         })
@@ -31,18 +34,17 @@ async function createCustomer (req, res) {
         const validationErrors = await validationResult(customer)
 
         if(!validationErrors.isEmpty()){
-            return res.status(400).json({
+            res.status(400).json({
                 errors: validationErrors.array()
             })
+            winston.log({level: 'error', message: validationErrors.array()})
         } else {
             await customer.save()    
             res.status(201).send(customer)
         }
 
     } catch (error) {
-        res.status(400).json({
-            "message": `Bad request. ${error}`
-        })
+        winston.log({level: "error", message: error})
         res.status(500).json({
             "message": `Internal server error. ${error}`
         })
@@ -69,6 +71,7 @@ async function updateCustomer (req, res) {
         const validationErrors = await validationResult(returnedCustomer)
 
         if(!validationErrors.isEmpty()){
+            winston.log({level: 'error', message: validationErrors.array()}) 
             return res.status(400).json({
                 errors: validationErrors.array()
             })
@@ -78,9 +81,7 @@ async function updateCustomer (req, res) {
         }
         
     } catch(error) {
-        res.status(400).json({
-            "message": `Bad request. ${error}`
-        })
+        winston.log({level: 'error', message: `No customer found with matching ID. ${error}`})
         res.status(404).json({
             "message": `No customer found with matching ID. ${error}`
         })
@@ -91,6 +92,7 @@ async function deleteCustomer (req, res) {
         const returnedCustomer = await Customer.findByIdAndDelete(req.params.customerId)
 
         if(!returnedCustomer){
+            winston.log({level: 'error', message: 'No customer found with matching ID'})
             res.status(404).json({
                 "message": `No customer found with matching ID.`
             })
@@ -100,6 +102,8 @@ async function deleteCustomer (req, res) {
             })
         }
     } catch (error) {
+        winston.log({level: "error", message: error})
+
         res.status(400).json({
             "message": `Bad request. ${error}`
         })

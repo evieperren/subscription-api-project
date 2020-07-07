@@ -2,6 +2,7 @@ const Router = require('express').Router
 const CustomerController = new Router()
 const { getAllCustomers, createCustomer, updateCustomer, deleteCustomer } = require('./customer-functionality')
 const expressValidation = require('./validation')
+const winston = require('winston')
 
 CustomerController.use('/', (req, res, next) => {
     console.log('reached controllers')

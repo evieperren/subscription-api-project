@@ -12,9 +12,12 @@ describe('Create customer test suite', () => {
   it('should create a customer from the request body', async () => {
     mockingoose(Customer).toReturn(requestCustomer, 'save')
     const result = await Customer.create(requestCustomer)
-    delete result._id
-    delete responseCustomer._id
-    expect(JSON.stringify(result)).toBe(JSON.stringify(responseCustomer)) // fails as it always makes a new ID
+    
+    expect(result.name).toEqual(responseCustomer.name)
+    expect(result.contactDetails).toEqual(responseCustomer.contactDetails)
+    expect(result.bankDetails).toEqual(responseCustomer.bankDetails)
+    expect(result.subscription).toEqual(responseCustomer.subscription)
+
   })
   it('should fail if a body is sent without name field completed', async () => {
     mockingoose(Customer).toReturn(requestCustomerNoName)

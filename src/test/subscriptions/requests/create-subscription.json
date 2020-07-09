@@ -1,0 +1,10 @@
+{
+  "cost": {
+      "standard": "5.00",
+      "premium": "10.00",
+      "deluxe": "15.00"
+  },
+  "name": "small_dog_treats",
+  "startDate": "01/01/2019",
+  "activeStatus": "active"
+}

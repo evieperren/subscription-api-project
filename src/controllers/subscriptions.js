@@ -1,6 +1,5 @@
 const { getAllSubscriptions, createSubscriptions } = require('./subscription-functionality')
 const expressValidation = require('./validation')
-const winston = require('winston')
 const Router = require('express').Router
 const SubscriptionController = new Router()
 const roles = require('../utils/authentication')

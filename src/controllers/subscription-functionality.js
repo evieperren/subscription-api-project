@@ -1,8 +1,6 @@
-const mongoose = require('mongoose')
-const SubscriptionSchema = require('../schemas/subscriptions')
 const { validationResult } = require('express-validator')
 const winston = require('winston')
-const Subscription = mongoose.model('subscriptions', SubscriptionSchema)
+const Subscription = require('../models/subscriptions')
 
 async function getAllSubscriptions (req, res) {
     try {

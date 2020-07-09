@@ -1,19 +1,25 @@
-const mongoose = require('mongoose')
-const CustomerSchema = require('../schemas/customers')
-const Customer = mongoose.model('customers', CustomerSchema)
+const Customer = require('../models/customers')
 const { validationResult } = require('express-validator')
 const winston = require('winston')
 const axios = require('axios')
-const authorisation = require('../utils/authorisation')
-const { subscribe } = require('..')
+
 async function getAllCustomers (req, res) {
+    
     try {
         if(req.query.customerId){
             const returnedCustomer = await Customer.findById(req.query.customerId)
-            res.status(200).send(returnedCustomer)
+            
+            if(returnedCustomer){
+                res.status(200).send(returnedCustomer)
+            } else {
+                res.status(404).json({
+                    "message": "No customers found. Please create a customer"
+                })
+                winston.log({level: 'error', message: 'No customers found. Please create a customer'})
+            }
             
         } else {
-            const returnedCustomers = await Customer.find()
+            const returnedCustomers = await Customer.find() 
             res.status(200).send(returnedCustomers)
 
             if(returnedCustomers.length === 0){

@@ -4,7 +4,6 @@ const winston = require('winston')
 const axios = require('axios')
 
 async function getAllCustomers (req, res) {
-    
     try {
         if(req.query.customerId){
             const returnedCustomer = await Customer.findById(req.query.customerId)

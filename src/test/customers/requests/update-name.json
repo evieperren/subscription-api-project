@@ -1,0 +1,25 @@
+{
+  "name": {
+      "first": "Evie",
+      "last": "Butland"
+  },
+  "contactDetails": {
+      "email": "email@email.com",
+      "postcode": "SP10 1DE",
+      "telephone": "01265789654"
+  },
+  "bankDetails": {
+      "accountNumber": 12345678,
+      "nameOnAccount": "Evie Butland",
+      "sortCode": 123456
+  },
+  "subscription": {
+      "activeStatus": "active",
+      "id": "05",
+      "level": "standard",
+      "name": "small pet treats"
+  },
+  "_id": "5f019b8c3142074cb32c2d21",
+  "__v": 0,
+  "startDate": "01/09/2020"
+}

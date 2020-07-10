@@ -1,4 +1,6 @@
+jest.mock('express-validator')
 const { createSubscriptions } = require('../../controllers/subscription-functionality')
+const { validationResult } = require('express-validator')
 const Subscription = require('../../models/subscriptions')
 const mockingoose = require('mockingoose').default
 const response = require('./responses/create-subscription.json')
@@ -27,5 +29,11 @@ describe('Create a subscription test suite', () => {
   })
   it('should throw an error if body is not passed', () => {
     // not sure how to do this
+  })
+  it('should throw an error if validation is failed', () => {
+    validationResult.mockImplementation(() => {
+      throw new Error
+    })
+    expect(validationResult).toThrow() // does this actually test anything??
   })
 })

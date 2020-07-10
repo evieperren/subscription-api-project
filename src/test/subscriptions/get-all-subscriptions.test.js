@@ -3,8 +3,12 @@ const { getAllSubscriptions } = require('../../controllers/subscription-function
 const mockingoose = require('mockingoose').default
 const Subscriptions = require('../../models/subscriptions')
 const getAllSubscriptionsResponse = require('./responses/get-all-subscriptions.json')
+const nameAndActiveResponse = require('./responses/name-and-active-subscriptions.json')
 
 describe('Get all subscriptions test suite', () => {
+  beforeEach(() => {
+    getAllSubscriptions.mockReset()
+  })
   it('should be defined', () => {
     expect(getAllSubscriptions).toBeDefined
   })
@@ -19,5 +23,10 @@ describe('Get all subscriptions test suite', () => {
       throw new Error()
     })
     expect(getAllSubscriptions()).toThrow() // does not work
+  })
+  it('should return subscriptions that have active status and a name', async () => {
+    mockingoose(Subscriptions).toReturn(nameAndActiveResponse)
+    const results = await Subscriptions.find({name: 'small_dog_treats', activeStatus: 'active'})
+    expect(results.length).toBe(4)
   })
 })

@@ -47,7 +47,6 @@ const CustomerSchema = new mongoose.Schema({
             required: true,
             trim: true,
             validate: validators.accountNumber
-
         },
         sortCode: {
             type: Number,

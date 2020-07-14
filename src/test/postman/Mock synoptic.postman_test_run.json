@@ -1,0 +1,398 @@
+{
+	"id": "6d7583d4-476e-42c5-a109-94270ddd4c56",
+	"name": "Mock synoptic",
+	"timestamp": "2020-07-14T19:23:29.365Z",
+	"collection_id": "1adfa7e4-0593-479e-b4b6-fdc2e8db1965",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 24,
+	"totalFail": 6,
+	"results": [
+		{
+			"id": "508106aa-85f8-4695-a014-3f558b57cfd3",
+			"name": "GET all customers",
+			"url": "http://localhost:5000/api/customers",
+			"time": 37,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response time is less than 200ms": true,
+				"Status code is 200": true,
+				"Check if pattern is in target string": true
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check if pattern is in target string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				37
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms": true,
+					"Status code is 200": true,
+					"Check if pattern is in target string": true
+				}
+			]
+		},
+		{
+			"id": "c4d9e268-c914-4a8d-ab79-828b9aee05df",
+			"name": "GET one customer by ID",
+			"url": "http://localhost:5000/api/customers?customerId=5f01a057a56232509fe6128c",
+			"time": 10,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response time is less than 200ms": true,
+				"Status code is 200": true,
+				"Status code name has string": true,
+				"Check if pattern is in target string": false,
+				"To return with a status code of 404 when ID is not found": false
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code name has string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check if pattern is in target string": {
+					"pass": 0,
+					"fail": 1
+				},
+				"To return with a status code of 404 when ID is not found": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms": true,
+					"Status code is 200": true,
+					"Status code name has string": true,
+					"Check if pattern is in target string": false,
+					"To return with a status code of 404 when ID is not found": false
+				}
+			]
+		},
+		{
+			"id": "2456894c-7d5d-4c47-8be6-8661627d3f34",
+			"name": "DELETE by ID",
+			"url": "http://localhost:5000/api/customers/5f01a12024ee9651237d4a24",
+			"time": 89,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response time is less than 200ms": true,
+				"Status code is 200": true,
+				"Status code name has string": true,
+				"Response shows successful deletion": true,
+				"To return with a status code of 404 when ID is not found": false
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code name has string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response shows successful deletion": {
+					"pass": 1,
+					"fail": 0
+				},
+				"To return with a status code of 404 when ID is not found": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				89
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms": true,
+					"Status code is 200": true,
+					"Status code name has string": true,
+					"Response shows successful deletion": true,
+					"To return with a status code of 404 when ID is not found": false
+				}
+			]
+		},
+		{
+			"id": "5909902a-7dde-4824-9ee8-f714352aa2e5",
+			"name": "Update by ID",
+			"url": "http://localhost:5000/api/customers/5f01a44ef08ac75351ae0e2a",
+			"time": 26,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response time is less than 200ms": true,
+				"Status code is 200": true,
+				"Status code name has string": true,
+				"To return with a status code of 404 when ID is not found": false,
+				"Check if body contains all provided keys": false
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code name has string": {
+					"pass": 1,
+					"fail": 0
+				},
+				"To return with a status code of 404 when ID is not found": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Check if body contains all provided keys": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				26
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms": true,
+					"Status code is 200": true,
+					"Status code name has string": true,
+					"To return with a status code of 404 when ID is not found": false,
+					"Check if body contains all provided keys": false
+				}
+			]
+		},
+		{
+			"id": "5db54e54-f5d1-409a-a8d8-39bd74c315d0",
+			"name": "CREATE customer",
+			"url": "http://localhost:5000/api/customers",
+			"time": 50,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Response time is less than 200ms": true,
+				"Successful POST request": true,
+				"Status code name has string": true
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code name has string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				50
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms": true,
+					"Successful POST request": true,
+					"Status code name has string": true
+				}
+			]
+		},
+		{
+			"id": "e5ce00c1-8314-4e4b-a8da-8f920a3ddc2d",
+			"name": "GET all subscriptions",
+			"url": "http://localhost:5000/api/subscriptions",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response time is less than 200ms": true,
+				"Status code is 200": true,
+				"Check if pattern is in target string": true
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Check if pattern is in target string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms": true,
+					"Status code is 200": true,
+					"Check if pattern is in target string": true
+				}
+			]
+		},
+		{
+			"id": "5e5b99d0-20e5-495b-8f0c-8f5d5003a7c6",
+			"name": "GET all active subscriptions",
+			"url": "http://localhost:5000/api/subscriptions?name=small_dog_treats&activeStatus=active",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response time is less than 200ms": true,
+				"Status code is 200": true,
+				"Response is an array": false
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response is an array": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms": true,
+					"Status code is 200": true,
+					"Response is an array": false
+				}
+			]
+		},
+		{
+			"id": "bd72e166-0270-470e-b844-786425a3e849",
+			"name": "CREATE a subscription",
+			"url": "http://localhost:5000/api/subscriptions",
+			"time": 10,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Response time is less than 200ms": true,
+				"Successful POST request": true,
+				"Status code name has string": true
+			},
+			"testPassFailCounts": {
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Successful POST request": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Status code name has string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Response time is less than 200ms": true,
+					"Successful POST request": true,
+					"Status code name has string": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 245,
+	"collection": {
+		"requests": [
+			{
+				"id": "508106aa-85f8-4695-a014-3f558b57cfd3",
+				"method": "GET"
+			},
+			{
+				"id": "c4d9e268-c914-4a8d-ab79-828b9aee05df",
+				"method": "GET"
+			},
+			{
+				"id": "2456894c-7d5d-4c47-8be6-8661627d3f34",
+				"method": "DELETE"
+			},
+			{
+				"id": "5909902a-7dde-4824-9ee8-f714352aa2e5",
+				"method": "PUT"
+			},
+			{
+				"id": "5db54e54-f5d1-409a-a8d8-39bd74c315d0",
+				"method": "POST"
+			},
+			{
+				"id": "e5ce00c1-8314-4e4b-a8da-8f920a3ddc2d",
+				"method": "GET"
+			},
+			{
+				"id": "5e5b99d0-20e5-495b-8f0c-8f5d5003a7c6",
+				"method": "GET"
+			},
+			{
+				"id": "bd72e166-0270-470e-b844-786425a3e849",
+				"method": "POST"
+			}
+		]
+	}
+}

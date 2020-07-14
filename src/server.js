@@ -4,8 +4,9 @@ const app = require('./index')
 
 mongoose.connect('mongodb://localhost:32770/chihuahua-box-db', {useNewUrlParser: true})
 .then(() => {
-    console.log('reached database')
-    server.listen(5000, () => console.log('yay i am connected'))
+    console.log('Successfully connected to database')
+    const port = 5000
+    server.listen(port, () => console.log(`Port set up at ${port}`))
     app.use('/api', require('./router'))
 })
 .catch((error) => {
